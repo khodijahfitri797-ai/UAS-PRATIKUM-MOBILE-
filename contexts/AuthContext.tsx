@@ -1,6 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { createContext, PropsWithChildren, useContext, useEffect, useMemo, useState } from 'react';
 
+import { DemoAccount } from '../constants/demoAccount';
 import { StorageKeys } from '../constants/storageKeys';
 import { loginUser } from '../services/api';
 
@@ -41,6 +42,25 @@ async function readRegisteredUsers(): Promise<RegisteredUser[]> {
   return raw ? (JSON.parse(raw) as RegisteredUser[]) : [];
 }
 
+async function ensureDemoAccountSeeded(): Promise<void> {
+  const registeredUsers = await readRegisteredUsers();
+  const alreadySeeded = registeredUsers.some((candidate) => candidate.username === DemoAccount.username);
+  if (alreadySeeded) return;
+
+  const [firstName, ...rest] = DemoAccount.name.split(' ');
+  const seededUser: RegisteredUser = {
+    id: 'local-demo',
+    username: DemoAccount.username,
+    email: DemoAccount.email,
+    firstName,
+    lastName: rest.join(' '),
+    image: `https://api.dicebear.com/7.x/thumbs/png?seed=${encodeURIComponent(DemoAccount.username)}`,
+    accessToken: 'local-session',
+    password: DemoAccount.password,
+  };
+  await AsyncStorage.setItem(StorageKeys.registeredUsers, JSON.stringify([...registeredUsers, seededUser]));
+}
+
 export function AuthProvider({ children }: PropsWithChildren) {
   const [user, setUser] = useState<AuthUser | null>(null);
   const [isHydrating, setIsHydrating] = useState(true);
@@ -49,6 +69,7 @@ export function AuthProvider({ children }: PropsWithChildren) {
   useEffect(() => {
     (async () => {
       try {
+        await ensureDemoAccountSeeded();
         const raw = await AsyncStorage.getItem(StorageKeys.authUser);
         if (raw) setUser(JSON.parse(raw) as AuthUser);
       } finally {
@@ -60,9 +81,10 @@ export function AuthProvider({ children }: PropsWithChildren) {
   const login = async (username: string, password: string) => {
     setIsSubmitting(true);
     try {
-      // DummyJSON only recognizes its seeded accounts (e.g. fitrikhodijah/fitri123).
-      // We try the real API first, then fall back to accounts created locally
-      // via Register, since DummyJSON has no persistent create-user endpoint.
+      // DummyJSON only recognizes its own seeded accounts (e.g. emilys/emilyspass),
+      // not locally-registered or demo accounts. We try the real API first, then
+      // fall back to accounts created locally via Register (or the seeded demo
+      // account), since DummyJSON has no persistent create-user endpoint.
       try {
         const response = await loginUser({ username, password });
         const authUser: AuthUser = {

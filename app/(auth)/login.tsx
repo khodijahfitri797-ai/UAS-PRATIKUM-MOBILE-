@@ -6,6 +6,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import AppButton from '../../components/AppButton';
 import InputField from '../../components/InputField';
 import { Colors } from '../../constants/colors';
+import { DemoAccount } from '../../constants/demoAccount';
 import { BorderWidth } from '../../constants/spacing';
 import { Spacing } from '../../constants/spacing';
 import { Fonts, FontSize } from '../../constants/typography';
@@ -46,8 +47,8 @@ export default function LoginScreen() {
 
           <View style={styles.hintBox}>
             <Text style={styles.hintTitle}>KREDENSIAL DEMO</Text>
-            <Text style={styles.hintText}>username: fitrikhodijah</Text>
-            <Text style={styles.hintText}>password: fitri123</Text>
+            <Text style={styles.hintText}>username: {DemoAccount.username}</Text>
+            <Text style={styles.hintText}>password: {DemoAccount.password}</Text>
           </View>
 
           <InputField
@@ -56,7 +57,7 @@ export default function LoginScreen() {
             onChangeText={setUsername}
             error={errors.username}
             autoCapitalize="none"
-            placeholder="fitrikhodijah"
+            placeholder={DemoAccount.username}
           />
           <InputField
             label="Password"

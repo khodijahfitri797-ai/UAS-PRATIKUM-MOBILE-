@@ -20,15 +20,15 @@ emulator/simulator.
 
 ## Kredensial Login Demo
 
-Login menggunakan API asli DummyJSON:
-
 - Username: `fitrikhodijah`
 - Password: `fitri123`
 
-Atau buat akun baru lewat halaman **Daftar** — karena DummyJSON tidak menyediakan endpoint
-create-user publik yang persisten, akun baru disimulasikan dengan disimpan ke
-`AsyncStorage` (lihat komentar di `contexts/AuthContext.tsx`). Login berikutnya untuk akun
-tersebut akan dicocokkan terhadap data lokal ini setelah percobaan ke API asli gagal.
+Akun ini **bukan** akun asli DummyJSON — DummyJSON hanya mengenali akun bawaan mereka
+sendiri (mis. `emilys` / `emilyspass`, yang juga tetap bisa dipakai untuk login karena app
+mencoba API asli terlebih dahulu). Karena DummyJSON tidak menyediakan endpoint create-user
+publik yang persisten, akun `fitrikhodijah` di-seed otomatis ke `AsyncStorage` saat app
+pertama kali dibuka (lihat `ensureDemoAccountSeeded` di `contexts/AuthContext.tsx`), persis
+seperti akun yang dibuat lewat halaman **Daftar**.
 
 ## Sumber Data
 
