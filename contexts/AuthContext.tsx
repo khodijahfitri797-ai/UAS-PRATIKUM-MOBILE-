@@ -60,7 +60,7 @@ export function AuthProvider({ children }: PropsWithChildren) {
   const login = async (username: string, password: string) => {
     setIsSubmitting(true);
     try {
-      // DummyJSON only recognizes its seeded accounts (e.g. emilys/emilyspass).
+      // DummyJSON only recognizes its seeded accounts (e.g. fitrikhodijah/fitri123).
       // We try the real API first, then fall back to accounts created locally
       // via Register, since DummyJSON has no persistent create-user endpoint.
       try {

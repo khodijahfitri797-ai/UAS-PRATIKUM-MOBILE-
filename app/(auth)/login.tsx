@@ -46,8 +46,8 @@ export default function LoginScreen() {
 
           <View style={styles.hintBox}>
             <Text style={styles.hintTitle}>KREDENSIAL DEMO</Text>
-            <Text style={styles.hintText}>username: emilys</Text>
-            <Text style={styles.hintText}>password: emilyspass</Text>
+            <Text style={styles.hintText}>username: fitrikhodijah</Text>
+            <Text style={styles.hintText}>password: fitri123</Text>
           </View>
 
           <InputField
@@ -56,7 +56,7 @@ export default function LoginScreen() {
             onChangeText={setUsername}
             error={errors.username}
             autoCapitalize="none"
-            placeholder="emilys"
+            placeholder="fitrikhodijah"
           />
           <InputField
             label="Password"

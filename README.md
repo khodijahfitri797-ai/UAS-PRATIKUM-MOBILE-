@@ -22,8 +22,8 @@ emulator/simulator.
 
 Login menggunakan API asli DummyJSON:
 
-- Username: `emilys`
-- Password: `emilyspass`
+- Username: `fitrikhodijah`
+- Password: `fitri123`
 
 Atau buat akun baru lewat halaman **Daftar** — karena DummyJSON tidak menyediakan endpoint
 create-user publik yang persisten, akun baru disimulasikan dengan disimpan ke
